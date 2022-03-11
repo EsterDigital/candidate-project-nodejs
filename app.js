@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require("cors");
 
 var app = express();
 
@@ -16,9 +17,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Allow other domains to access
+app.use(cors());
+
+//middleware to verify authorization
+app.use(function(req,res,next){
+  if(!req.headers.authorization){
+    return res.status(403).json({ error: "Not Auhtorized!" })
+  }
+  next();
+});
+
 app.get('/', (req, res) => {
   res.render('index', { title: 'Candidate Code Challenge - NodeJS API' });
 });
+
+// API entrypoint
+app.use ("/api", require("./routes/router"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
