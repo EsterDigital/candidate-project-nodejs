@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require('body-parser');
 
 var app = express();
 
@@ -16,9 +17,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.get('/', (req, res) => {
   res.render('index', { title: 'Candidate Code Challenge - NodeJS API' });
 });
+
+require('./routes')(app);
+// app.get('*', (req, res) => res.status(200).send({
+//     message: 'Candidate Code Challenge - NodeJS API',
+// }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
