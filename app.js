@@ -16,6 +16,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// -----------------------------------------------------
+/*
+  CCC 0/7: Create an API that exposes several CRUD operations over HTTP for a predefined data schema
+*/
+app.use(express.json());
+require('./api')(app);
+
+/*
+  CCC 5/7: Allow CORS from any domain [as the 'cors' npm package does] -> Note: limited local testing w/ curl
+*/
+app.options('*', (req, res) => {
+    res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'HEAD, POST, GET, PUT, PATCH, DELETE',
+        'Vary': 'Access-Control-Request-Headers',
+    });
+    res.status(204).send(); 
+});
+// -----------------------------------------------------
+
 app.get('/', (req, res) => {
   res.render('index', { title: 'Candidate Code Challenge - NodeJS API' });
 });
