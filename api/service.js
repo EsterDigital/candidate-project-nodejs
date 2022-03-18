@@ -28,7 +28,7 @@ module.exports = {
     create_user: async (req, res) => {
         try {
             /* 
-              CCC 7/7: Ensure that all incoming [mutation] requests contain an 'authorization' header (set from 'dev-tool/postman > headers > key > val')
+                CCC 7/7: Ensure that all incoming [mutation] requests contain an 'authorization' header (set from 'dev-tool/postman > headers > key > val')
             */
             if (!req.headers.authorization) {
                 code(res, 401);
