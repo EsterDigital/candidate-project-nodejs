@@ -3,12 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require("cors")
 
-const userRoutes = require("./routes/user");
-const postRoutes = require("./routes/post");
-const commentRoutes = require("./routes/comment");
+var userRoutes = require("./routes/user");
+var postRoutes = require("./routes/post");
+var commentRoutes = require("./routes/comment");
 
 var app = express();
+// enable cors
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
