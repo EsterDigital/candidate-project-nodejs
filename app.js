@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const userRoutes = require("./routes/user");
+
 var app = express();
 
 // view engine setup
@@ -19,6 +21,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.render('index', { title: 'Candidate Code Challenge - NodeJS API' });
 });
+
+// api routes
+app.use("/api/v1/users", userRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
