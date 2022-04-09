@@ -2,6 +2,7 @@ const express = require("express");
 const authController = require('../controllers/auth');
 const userController = require("../controllers/user");
 const postController = require("../controllers/post");
+const commentController = require("../controllers/comment");
 
 const userRouter = express.Router();
 
@@ -17,5 +18,8 @@ userRouter.route('/:id')
 
 userRouter.route('/:userId/posts')
   .get(authController.protect, postController.getPostsByUserId);
+
+userRouter.route('/:userId/posts/:postId/comments')
+  .get(authController.protect, commentController.getCommentsByPostId);
 
 module.exports = userRouter;
