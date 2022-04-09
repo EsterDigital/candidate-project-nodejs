@@ -15,4 +15,7 @@ userRouter.route('/:id')
   .patch(authController.protect, userController.updateUser)
   .delete(authController.protect, userController.deleteUser);
 
+userRouter.route('/:userId/posts')
+  .get(authController.protect, postController.getPostsByUserId);
+
 module.exports = userRouter;
