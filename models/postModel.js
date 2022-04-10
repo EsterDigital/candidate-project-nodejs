@@ -4,6 +4,34 @@ const db = getDatabase();
 const posts =  db.addCollection('posts', { indices: ['_id'] });
 
 const Post = {
+  // schema and validation
+  createPostSchema: {
+    userId: {
+      exists: {
+        errorMessage: "userId field is missing"
+      },
+      notEmpty: {
+        errorMessage: "userId field cannot be empty"
+      },
+      isInt: {
+        errorMessage: "invalid userId, it should be number"
+      }
+    },
+    title: {
+      exists: {
+        errorMessage: "title field is missing"
+      },
+      notEmpty: {
+        errorMessage: "title field cannot be empty"
+      }
+    },
+    body: {
+      exists: {
+        errorMessage: "body field is missing"
+      }
+    }
+  },
+  // db operations
   getPosts(query){
     query = query || { };
     return posts.find(query);

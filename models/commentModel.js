@@ -4,6 +4,46 @@ const db = getDatabase();
 const comments =  db.addCollection('comments', { indices: ['_id'] });
 
 const Comment = {
+  // schema and validation
+  createCommentSchema: {
+    postId: {
+      exists: {
+        errorMessage: "postId field is missing"
+      },
+      notEmpty: {
+        errorMessage: "postId field cannot be empty"
+      },
+      isInt: {
+        errorMessage: "invalid postId, it should be number"
+      }
+    },
+    name: {
+      exists: {
+        errorMessage: "name field is missing"
+      },
+      notEmpty: {
+        errorMessage: "name field cannot be empty"
+      }
+    },
+    email: {
+      exists: {
+        errorMessage: "email field is missing"
+      },
+      notEmpty: {
+        errorMessage: "email field cannot be empty"
+      },
+      isEmail: {
+        errorMessage: "invalid email value",
+        bail: true
+      }
+    },
+    body: {
+      exists: {
+        errorMessage: "body field is missing"
+      }
+    }
+  },
+  // db operations
   getComments(query){
     query = query || { };
     return comments.find(query);
