@@ -31,6 +31,14 @@ const Post = {
       }
     }
   },
+  getPostsByUserIdSchema: {
+    userId: {
+      in: ['params', 'query'],
+      errorMessage: "provide userId as number to fetch details",
+      isInt: true,
+      toInt: true,
+    }
+  },
   // db operations
   getPosts(query){
     query = query || { };

@@ -43,6 +43,14 @@ const Comment = {
       }
     }
   },
+  getCommentsByPostIdSchema: {
+    postId: {
+      in: ['params', 'query'],
+      errorMessage: "provide postId as number to fetch details",
+      isInt: true,
+      toInt: true,
+    }
+  },
   // db operations
   getComments(query){
     query = query || { };

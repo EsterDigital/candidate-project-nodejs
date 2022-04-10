@@ -7,6 +7,8 @@ const postController = require("../controllers/post");
 const commentController = require("../controllers/comment");
 
 const { createUserSchema } = require('../models/userModel');
+const { getPostsByUserIdSchema } = require('../models/postModel');
+const { getCommentsByPostIdSchema } = require('../models/commentModel');
 const { validate } = require('../utils/helpers');
 
 const userRouter = express.Router();
@@ -21,9 +23,9 @@ userRouter.route('/:id')
   .delete(authController.protect, userController.deleteUser);
 
 userRouter.route('/:userId/posts')
-  .get(authController.protect, postController.getPostsByUserId);
+  .get(authController.protect, validate(checkSchema(getPostsByUserIdSchema)), postController.getPostsByUserId);
 
 userRouter.route('/:userId/posts/:postId/comments')
-  .get(authController.protect, commentController.getCommentsByPostId);
+  .get(authController.protect, validate(checkSchema(getPostsByUserIdSchema)), validate(checkSchema(getCommentsByPostIdSchema)), commentController.getCommentsByPostId);
 
 module.exports = userRouter;
